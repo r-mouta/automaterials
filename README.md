@@ -29,7 +29,7 @@
 6. Ainda no Anaconda Prompt (Miniconda3), navegue (usando o comando cd) até o diretório automaterials e, dentro dele, execute:
     
    ```
-       pip install .
+   pip install .
    ```
    
    Caso você queira usar no modo desenvolvedor (ou seja, contribuindo com novos códigos), execute em vez disso:
@@ -37,7 +37,7 @@
    Caso você queira usar no modo desenvolvedor (ou seja, contribuindo com novos códigos), execute em vez disso:
    
    ```
-     pip install -e .
+   pip install -e .
    ```
    
    
