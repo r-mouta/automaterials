@@ -1,0 +1,7 @@
+ipython
+ipdb
+pytest
+flake8
+blue
+mkdocs
+prospector
