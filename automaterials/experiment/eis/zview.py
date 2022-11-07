@@ -8,6 +8,10 @@ from typing import List, Optional, Union
 from automaterials.experiment.eis.circuits import Resistor, Capacitor, CPE, Inductor
 from automaterials.experiment.eis.circuits import Circuit
 
+__author__ = "Rodolpho Mouta"
+__maintainer__ = "Rodolpho Mouta"
+__email__ = "mouta.rodolpho@gmail.com"
+
 class ZViewResistor(Resistor):
     """
     A Resistor subclass to represent resistors used in equivalent circuit 
@@ -90,6 +94,27 @@ class ZViewInductor(Inductor):
         super().__init__(L = L, label = label)
         self.L_isfixed = L_isfixed
 
+class ZViewCircuit:
+    def __init__(self, filename):
+        self.filename = filename
+    
+    @property
+    def circuit(self):
+        mdl = MdlReader(self.filename)
+        elements_grouped = mdl.elements_grouped
+        for group_idx, group in enumerate(elements_grouped):
+            first_element = group[0]
+            subcircuit = first_element
+            if len(group) > 1:
+                other_elements = group[1:] 
+                for element in other_elements:
+                    subcircuit = subcircuit//element # parallel association
+            if group_idx == 0:
+                circuit = subcircuit
+            else:
+                circuit = circuit - subcircuit # series association
+        return circuit
+
 
 # class ZViewCircuit(Circuit, metaclass=ABCMeta):
 #     """
@@ -135,6 +160,10 @@ class ZViewInductor(Inductor):
 #         return isinstance(self, ZViewSeriesCircuit)
 
 class MdlReader:
+    """
+    A class for reading ZView .mdl files.
+    """
+
     def __init__(self, filename):
         self.filename = filename
     
@@ -213,31 +242,7 @@ class MdlReader:
                 else:
                     elements_grouped.append([element])
                     
-        return elements_grouped
-     
-
-class ZViewCircuit:
-    def __init__(self, filename):
-        self.filename = filename
-    
-    @property
-    def circuit(self):
-        mdl = MdlReader(self.filename)
-        elements_grouped = mdl.elements_grouped
-        for group_idx, group in enumerate(elements_grouped):
-            first_element = group[0]
-            subcircuit = first_element
-            if len(group) > 1:
-                other_elements = group[1:] 
-                for element in other_elements:
-                    subcircuit = subcircuit//element # parallel association
-            if group_idx == 0:
-                circuit = subcircuit
-            else:
-                circuit = circuit - subcircuit # series association
-        return circuit
-
-                
+        return elements_grouped            
 
 
 
