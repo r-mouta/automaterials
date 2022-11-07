@@ -1,16 +1,43 @@
-from circuits import *
+# coding: utf-8
+
+from smart import *
 from zview import *
 from properties import *
+from circuits import *
 
-res1 = 100
-cap1 = 1e-9
-t1 = 1e-8
-p1 = 0.5
-t2 = 1e-6
-p2 = 0.7
+import os
+
+directory = r'd:\Dropbox\Research\Codes\temp3'
+files = os.listdir(directory)
+for file in files:
+    print(f'Converting file {file} ...',end=' ')
+    smart = SmartFileReader(directory + '\\' + file)
+    smart.to_zview()
+    print(f'Done!')
+
+"""
+res1 = 100000.0
+cap1 = 1.0e-9
 
 r = Resistor(res1)
 c = Capacitor(cap1)
+l = L(1e-3)
+r2 = R(100)
+q = Q(1e-10,0.5)
+rc = r//c
+rq = r2//q
+series = l-(r//q//r//q)-rq-c
+parallel = rc//rq
+print(rc.as_dict(),'\n',
+      series.as_dict(),'\n',
+      parallel.as_dict())
+#print((rc//rc).z())
+print(series.is_compatible_with_blm)
+
+
+#rc.zdata_to_csv(filename="synthetic_data.csv")
+"""
+"""
 q = Q(t1, p1)
 q2 = Q(t2, p2)
 rc = r//c
@@ -26,6 +53,7 @@ rc_rq_q_alternative = (r//c)-(r//q)-q2
 rc_rq_q_alternative__df = rc_rq_q_alternative.zdata_as_dataframe()
 
 print(rc_rq_q_alternative__df)
+"""
 
 
 """ r_0 = Resistor(100)
@@ -44,7 +72,8 @@ r_ele = Resistor(1e13)
 #circuit = rq1-rq_ser
 circuit = ((r_g//q_g)//(r_par//q_par))-(r_ser//q_ser)
 freqs = [1,10,1e2,1e3,1e4,1e5,1e6]
-circuit.zdata_to_zview(freqs, 'my_data.dat') """
+circuit.zdata_to_zview(freqs, 'my_data.dat') 
+"""
 
 #zviewcircuit = ZViewCircuit(r'd:\UFC\Dropbox\automaterials\QT.mdl')
 #circuit = zviewcircuit.circuit

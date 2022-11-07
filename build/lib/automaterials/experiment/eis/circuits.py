@@ -10,7 +10,7 @@ from abc import ABCMeta, abstractmethod
 from typing import List, Optional, Union
 
 from automaterials.experiment.eis.properties import ZData
-from automaterials.experiment.eis.conversions import omega, f
+from automaterials.experiment.eis.property_conversions import omega, f
 from automaterials.utils.constants import F_DEFAULT
 
 
